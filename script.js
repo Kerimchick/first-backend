@@ -60,6 +60,6 @@ server.patch("/api/tasks/:category/:id", (req,res) => {
     res.json({status : "successfully"})
 })
 
-server.listen(8000, () => {
+server.listen(process.env.PORT || 8000, () => {
     console.log("server is started")
 })
