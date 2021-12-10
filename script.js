@@ -13,6 +13,16 @@ const readFile = (fileName) => {
     }
 }
 
+server.get("/api/tasks/:category/:timespan", (req, res) => {
+    const data = readFile(req.params.category)
+    const duration = {
+        "day" : 1000 * 60 * 60 * 24,
+        "week" : 1000 * 60 * 60 * 24 * 7,
+        "month" : 1000 * 60 * 60 * 24 * 7 * 30
+    }
+    const filteredData = data.filter(el => +new Date() - el._createdAt < duration[req.params.timespan])
+    res.json(filteredData)
+})
 server.get("/api/tasks/:category", (req, res) => {
     const data = readFile(req.params.category)
     const filteredData = data.filter(item => !item._isDeleted)
